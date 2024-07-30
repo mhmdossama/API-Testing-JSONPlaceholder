@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "cb82053f-6417-4756-9856-81d8a8fb8046",
+		"name": "Without Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14370588"
+	},
+	"item": [
+		{
+			"name": "1: Retrieve All Posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2: Retrieve a Specific Post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let random = Math.floor(Math.random() * 100) + 1;\r",
+							"\r",
+							"pm.collectionVariables.set(\"postID\",random)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3: Create a New Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"example\",\r\n  \"body\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n  \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4: Update an Existing Post",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"example updated\",\r\n  \"body\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{fixedIdOne}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{fixedIdOne}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5: Partially Update an Existing Post",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"partially update title\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{fixedIdOne}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{fixedIdOne}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6: Delete a Post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/{{fixedIdOne}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{fixedIdOne}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7: Retrieve Posts by User ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let random = Math.floor(Math.random() * 10) + 1;\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId\",random)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts?userId={{userId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8: Handle Invalid Post ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate a random invalid post ID between 101 and 1000\r",
+							"const randomInvalidPostId = Math.floor(Math.random() * (1000 - 101 + 1)) + 101;\r",
+							"\r",
+							"pm.collectionVariables.set(\"invalidPostId\", randomInvalidPostId);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{invalidPostId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{invalidPostId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"let baseURL =\"https://jsonplaceholder.typicode.com\"\r",
+					"\r",
+					"pm.collectionVariables.set(\"baseURL\",baseURL);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://jsonplaceholder.typicode.com"
+		},
+		{
+			"key": "postID",
+			"value": "1"
+		},
+		{
+			"key": "userId",
+			"value": "1"
+		},
+		{
+			"key": "invalidPostId",
+			"value": "9999"
+		},
+		{
+			"key": "fixedIdOne",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
